@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { ArrowRight, Clock, DollarSign, LineChart, TrendingUp, Briefcase, Search } from "lucide-react";
 import { useState } from "react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import  MainLayout  from "@/components/layout/MainLayout";
 
 interface SideHustleCard {
   id: string;
@@ -115,9 +114,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar/>
-      {/* Hero Section */}
+    <MainLayout>
       <section className="relative pt-24 pb-20 md:pt-32 md:pb-24 gradient-bg text-white overflow-hidden">
         <div className="absolute inset-0 noise-bg"></div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background/20 to-transparent"></div>
@@ -175,7 +172,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Side Hustles */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center mb-12">
@@ -264,7 +260,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories Section */}
       <section className="py-16 md:py-24 bg-muted/10">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center mb-12">
@@ -316,7 +311,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Earnings Calculator */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center mb-12">
@@ -360,7 +354,6 @@ export default function Home() {
           </Card>
         </div>
       </section>
-      <Footer />
-    </div>
+    </MainLayout>
   );
 }

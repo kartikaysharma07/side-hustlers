@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu, Search, User } from "lucide-react";
 import { useState, useEffect } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -21,6 +22,7 @@ const navLinks = [
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +41,7 @@ export function Navbar() {
           : "bg-transparent py-4"
       )}
     >
-      <div className="container flex items-center justify-between mx-auto">
+      <div className="container mx-auto flex items-center justify-between">
         <Link
           href="/"
           className={cn(
@@ -47,7 +49,7 @@ export function Navbar() {
             isScrolled ? "text-foreground" : "text-white"
           )}
         >
-          <span className="text-primary">Side</span>HustlingStories
+          <span className="text-blue-500">Side</span>HustleStories
         </Link>
 
         {/* Desktop Navigation */}
@@ -67,32 +69,70 @@ export function Navbar() {
           ))}
 
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" className="text-foreground rounded-full w-10 h-10">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-foreground rounded-full w-10 h-10"
+            >
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
-            <Button className="rounded-full px-6">
-              <User className="h-4 w-4 mr-2" /> Sign In
-            </Button>
+            {status === "authenticated" ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-foreground rounded-full w-10 h-10"
+                  >
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">User menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem className="font-medium">
+                    {session?.user?.name}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                onClick={() => signIn("google", { callbackUrl: "/" })}
+                className="rounded-full px-6"
+              >
+                <User className="h-4 w-4 mr-2" /> Sign In
+              </Button>
+            )}
           </div>
         </div>
 
         {/* Mobile Navigation */}
         <div className="md:hidden flex items-center space-x-2">
-          <Button variant="ghost" size="icon" className={cn(
-            "rounded-full w-10 h-10",
-            isScrolled ? "text-foreground" : "text-white"
-          )}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "rounded-full w-10 h-10",
+              isScrolled ? "text-foreground" : "text-white"
+            )}
+          >
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className={cn(
-                "rounded-full w-10 h-10",
-                isScrolled ? "text-foreground" : "text-white"
-              )}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "rounded-full w-10 h-10",
+                  isScrolled ? "text-foreground" : "text-white"
+                )}
+              >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
@@ -106,9 +146,21 @@ export function Navbar() {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuItem asChild>
-                <Link href="/signin" className="flex w-full cursor-pointer">
-                  Sign In
-                </Link>
+                {status === "authenticated" ? (
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="flex w-full cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                    className="flex w-full cursor-pointer"
+                  >
+                    Sign In
+                  </button>
+                )}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
