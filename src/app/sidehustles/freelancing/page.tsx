@@ -1,4 +1,4 @@
-// src/app/sidehustles/freelancing/page.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -24,7 +24,6 @@ import {
   Mail,
 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
 const sideHustle = {
   id: "freelancing",
@@ -351,7 +350,10 @@ export default function FreelancingPage() {
           </p>
           <div className="flex justify-center mb-6 animate-fade-up animate-delay-200">
             <Select value={skillFilter} onValueChange={setSkillFilter}>
-              <SelectTrigger className="rounded-full bg-white/10 border-white/20 text-foreground w-64">
+              <SelectTrigger
+                className="rounded-full bg-white/10 border-white/20 text-foreground w-64"
+                suppressHydrationWarning
+              >
                 <SelectValue placeholder="Filter by skill" />
               </SelectTrigger>
               <SelectContent>
@@ -446,6 +448,7 @@ export default function FreelancingPage() {
                     min={0}
                     className="bg-white/50"
                     aria-label="Hours per week"
+                    suppressHydrationWarning
                   />
                 </div>
                 <div>
@@ -460,6 +463,7 @@ export default function FreelancingPage() {
                     min={0}
                     className="bg-white/50"
                     aria-label="Hourly rate"
+                    suppressHydrationWarning
                   />
                 </div>
                 <p className="text-lg font-semibold">
@@ -616,21 +620,20 @@ export default function FreelancingPage() {
         </div>
       </section>
 
-      {/* Newsletter & CTA Section */}
+      {/* CTA Section */}
       <section className="py-16 md:py-24 bg-primary/5 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center mb-12">
             <div className="h-[1px] w-12 bg-primary/70"></div>
-            <span className="mx-3 text-sm font-medium text-primary">STAY CONNECTED</span>
+            <span className="mx-3 text-sm font-medium text-primary">GET STARTED</span>
             <div className="h-[1px] w-12 bg-primary/70"></div>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-up">
-            Join the Freelancing Revolution
+            Kickstart Your Freelancing Journey
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up animate-delay-100">
-            Get weekly freelancing tips, platform updates, and success stories delivered to your inbox.
+            Connect with us or take our quiz to find the perfect freelancing path for you.
           </p>
-          <NewsletterForm />
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-300">
             <Button asChild variant="default" className="flex gap-2 items-center rounded-full">
               <Link href="mailto:contact@sidehustlingstories.com">
