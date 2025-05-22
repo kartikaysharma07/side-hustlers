@@ -13,56 +13,56 @@ const categories = [
     name: "Digital & Online",
     description: "Side hustles that can be done completely online",
     count: 24,
-    subcategories: ["Blogging", "Social Media", "Digital Products", "SaaS", "Affiliate Marketing"]
+    subcategories: ["Blogging", "Social Media", "Digital Products", "SaaS", "Affiliate Marketing"],
   },
   {
     id: "creative",
     name: "Creative & Design",
     description: "Side hustles for creatively inclined individuals",
     count: 18,
-    subcategories: ["Graphic Design", "Photography", "Video Production", "Writing", "Art"]
+    subcategories: ["Graphic Design", "Photography", "Video Production", "Writing", "Art"],
   },
   {
     id: "freelancing",
     name: "Freelancing & Services",
     description: "Offering your skills and services to clients",
     count: 22,
-    subcategories: ["Web Development", "Content Creation", "Virtual Assistant", "Consulting", "Marketing"]
+    subcategories: ["Web Development", "Content Creation", "Virtual Assistant", "Consulting", "Marketing"],
   },
   {
     id: "physical",
     name: "Physical Products",
     description: "Side hustles involving selling or creating physical items",
     count: 15,
-    subcategories: ["E-commerce", "Handmade Crafts", "Dropshipping", "Print-on-Demand", "Local Selling"]
+    subcategories: ["E-commerce", "Handmade Crafts", "Dropshipping", "Print-on-Demand", "Local Selling"],
   },
   {
     id: "finance",
     name: "Finance & Investing",
     description: "Side hustles related to money management and investments",
     count: 10,
-    subcategories: ["Stock Trading", "Cryptocurrency", "Real Estate", "P2P Lending", "Financial Content Creation"]
+    subcategories: ["Stock Trading", "Cryptocurrency", "Real Estate", "P2P Lending", "Financial Content Creation"],
   },
   {
     id: "education",
     name: "Education & Coaching",
     description: "Side hustles focused on teaching and mentoring others",
     count: 12,
-    subcategories: ["Online Courses", "Tutoring", "Coaching", "Workshops", "Writing Educational Content"]
+    subcategories: ["Online Courses", "Tutoring", "Coaching", "Workshops", "Writing Educational Content"],
   },
   {
     id: "misc",
     name: "Miscellaneous",
     description: "Other unique and interesting side hustle opportunities",
     count: 8,
-    subcategories: ["Rental Business", "Task Services", "Local Services", "Event Planning", "Seasonal Work"]
+    subcategories: ["Rental Business", "Task Services", "Local Services", "Event Planning", "Seasonal Work"],
   },
   {
     id: "passive",
     name: "Passive Income",
     description: "Side hustles that generate income with minimal ongoing work",
     count: 16,
-    subcategories: ["Dividend Investing", "Content Royalties", "Apps & Software", "Print-on-Demand", "Automated Digital Products"]
+    subcategories: ["Dividend Investing", "Content Royalties", "Apps & Software", "Print-on-Demand", "Automated Digital Products"],
   },
 ];
 
@@ -73,13 +73,15 @@ export default function CategoriesPage() {
 
       {/* Header */}
       <section className="relative pt-24 pb-20 md:pt-32 md:pb-24 gradient-bg text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10"></div>
+        <div className="absolute inset-0 noise-bg"></div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background/20 to-transparent"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 text-sm font-medium text-white/70 mb-4 animate-fade-up">
-              <Link href="/" className="hover:text-white">Home</Link>
+              <Link href="/" className="hover:text-white">
+                Home
+              </Link>
               <ChevronRight className="h-4 w-4" />
               <span>Categories</span>
             </div>
@@ -127,7 +129,9 @@ export default function CategoriesPage() {
                         {category.count}
                       </span>
                     </CardTitle>
-                    <CardDescription className="line-clamp-2 text-base">{category.description}</CardDescription>
+                    <CardDescription className="line-clamp-2 text-base">
+                      {category.description}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-2 mb-2">

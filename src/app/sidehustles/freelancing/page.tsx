@@ -1,20 +1,37 @@
+// src/app/sidehustles/freelancing/page.tsx
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 import {
-  ArrowRight, Clock, DollarSign, Star, TrendingUp,
-  CheckCircle2, XCircle, Lightbulb, Landmark, GraduationCap, Users
+  ArrowRight,
+  Clock,
+  DollarSign,
+  Star,
+  TrendingUp,
+  CheckCircle2,
+  XCircle,
+  GraduationCap,
+  Users,
+  Landmark,
+  Mail,
 } from "lucide-react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
-// This would normally come from a database or API
 const sideHustle = {
   id: "freelancing",
   title: "Freelancing",
   description: "Offer your skills and services directly to clients on a project basis.",
-  longDescription: "Freelancing involves offering your professional skills and services directly to clients on a project basis, rather than working as an employee for a single company. As a freelancer, you work independently, set your own rates, choose your clients, and determine your work schedule. Freelancers typically offer services in areas like writing, design, programming, marketing, consulting, and many other professional fields.",
+  longDescription:
+    "Freelancing empowers you to turn your skills into a flexible, independent career. Work on projects you love, set your own rates, and choose clients that align with your goals. From writing and design to programming and consulting, freelancing spans countless fields, offering endless opportunities to build income and expertise.",
   category: "Freelancing & Services",
   income: "$$-$$$$ ($20-$150+/hour)",
   difficulty: "Medium",
@@ -28,141 +45,218 @@ const sideHustle = {
     "Set your own rates",
     "Low startup costs",
     "Ability to scale up or down as needed",
-    "Diverse income streams"
+    "Diverse income streams",
   ],
   cons: [
     "Inconsistent income, especially at the beginning",
     "Responsible for finding clients and marketing yourself",
     "Must handle all business aspects (taxes, invoicing, etc.)",
     "No employee benefits (healthcare, paid time off)",
-    "Can be isolating without coworkers"
+    "Can be isolating without coworkers",
   ],
   steps: [
     {
       title: "Identify Your Marketable Skills",
-      description: "Determine which of your skills are in demand and can be offered as freelance services. Consider your professional experience, education, and personal interests."
+      description: "Pinpoint skills in demand, like writing, design, or coding, based on your experience and passions.",
     },
     {
       title: "Define Your Services and Rates",
-      description: "Clearly define what services you'll offer and how much you'll charge. Research market rates for your skills and experience level to price competitively."
+      description: "Outline your offerings and set competitive rates by researching market standards.",
     },
     {
       title: "Create an Online Presence",
-      description: "Build a professional website showcasing your portfolio, services, and testimonials. Set up profiles on relevant social media platforms and freelance marketplaces."
+      description: "Build a portfolio website and profiles on platforms like LinkedIn or Upwork to attract clients.",
     },
     {
       title: "Build Your Portfolio",
-      description: "Create samples of your work to demonstrate your skills to potential clients. If you're just starting, consider offering free or discounted work to build your portfolio."
+      description: "Showcase your work with samples, even if it means starting with pro bono or discounted projects.",
     },
     {
       title: "Find Your First Clients",
-      description: "Start with your existing network, join freelance platforms, attend networking events, and reach out to potential clients directly."
+      description: "Tap your network, join freelance platforms, and pitch directly to potential clients.",
     },
     {
       title: "Set Up Business Processes",
-      description: "Establish professional systems for contracts, invoicing, time tracking, and project management to ensure smooth operations."
+      description: "Use tools for contracts, invoicing, and project management to stay organized.",
     },
     {
-      title: "Deliver Quality Work and Build Relationships",
-      description: "Focus on exceeding client expectations, meeting deadlines, and building strong professional relationships to generate repeat business and referrals."
-    }
+      title: "Deliver Quality Work",
+      description: "Exceed expectations to earn repeat business and glowing referrals.",
+    },
   ],
   platforms: [
     {
       name: "Upwork",
       description: "The largest freelance marketplace with opportunities in virtually every field.",
-      url: "https://www.upwork.com"
+      url: "https://www.upwork.com/?source=sidehustle",
     },
     {
       name: "Fiverr",
-      description: "Popular platform where you can create specific service packages (called 'gigs').",
-      url: "https://www.fiverr.com"
+      description: "Create specific service packages (gigs) to attract clients quickly.",
+      url: "https://www.fiverr.com/?source=sidehustle",
     },
     {
       name: "Freelancer",
-      description: "Global freelancing platform with millions of projects posted.",
-      url: "https://www.freelancer.com"
+      description: "Global platform with millions of projects across various skills.",
+      url: "https://www.freelancer.com/?source=sidehustle",
     },
     {
       name: "99designs",
-      description: "Specifically for graphic designers to showcase work and enter design contests.",
-      url: "https://99designs.com"
+      description: "Ideal for graphic designers to showcase work and enter design contests.",
+      url: "https://99designs.com/?source=sidehustle",
     },
     {
       name: "Toptal",
-      description: "Exclusive network for the top 3% of freelance talent in various fields.",
-      url: "https://www.toptal.com"
-    }
+      description: "Exclusive network for top-tier freelancers in tech and design.",
+      url: "https://www.toptal.com/?source=sidehustle",
+    },
   ],
   resources: [
     {
       name: "The Freelancer's Bible",
-      description: "Comprehensive guide to all aspects of freelancing."
+      description: "Comprehensive guide to all aspects of freelancing.",
     },
     {
       name: "Freelancers Union",
-      description: "Organization offering resources, community, and advocacy for freelancers."
+      description: "Resources, community, and advocacy for freelancers.",
     },
     {
       name: "AND.CO",
-      description: "Software for managing freelance business operations."
+      description: "Software for managing freelance business operations.",
     },
     {
       name: "Creative Class",
-      description: "Online course on the business of freelancing."
-    }
+      description: "Online course on the business of freelancing.",
+    },
   ],
   popularSkills: [
-    "Web Development", "Graphic Design", "Content Writing", "Digital Marketing",
-    "Social Media Management", "SEO", "Video Editing", "Translation",
-    "Virtual Assistance", "Accounting", "Consulting", "UI/UX Design"
-  ]
+    "Web Development",
+    "Graphic Design",
+    "Content Writing",
+    "Digital Marketing",
+    "Social Media Management",
+    "SEO",
+    "Video Editing",
+    "Translation",
+    "Virtual Assistance",
+    "Accounting",
+    "Consulting",
+    "UI/UX Design",
+  ],
+  testimonials: [
+    {
+      name: "Sarah M.",
+      quote: "Freelancing on Upwork changed my life. I now earn $3,000/month working part-time from home!",
+      skill: "Content Writing",
+    },
+    {
+      name: "James T.",
+      quote: "Fiverr helped me kickstart my graphic design career. The resources here were invaluable.",
+      skill: "Graphic Design",
+    },
+    {
+      name: "Priya R.",
+      quote: "As a web developer, Toptal connected me with high-paying clients. This guide got me started!",
+      skill: "Web Development",
+    },
+  ],
 };
 
 export default function FreelancingPage() {
+  const [skillFilter, setSkillFilter] = useState("All");
+  const [hours, setHours] = useState(10);
+  const [rate, setRate] = useState(20);
+  const skills = ["All", ...sideHustle.popularSkills];
+
+  const filteredSkills = skillFilter === "All" ? sideHustle.popularSkills : [skillFilter];
+  const filteredTestimonials =
+    skillFilter === "All" ? sideHustle.testimonials : sideHustle.testimonials.filter((t) => t.skill === skillFilter);
+
   return (
     <>
-      <Navbar />
+      <ErrorBoundary fallback={<div>Error loading navigation</div>}>
+        <Navbar />
+      </ErrorBoundary>
 
-      {/* Header */}
-      <section className="pt-24 pb-8 md:pt-32 md:pb-12 bg-zinc-50 dark:bg-zinc-900">
-        <div className="container mx-auto px-4">
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-20 md:pt-32 md:pb-24 gradient-bg text-white overflow-hidden">
+        <div className="absolute inset-0 noise-bg"></div>
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background/20 to-transparent"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <Link
             href="/sidehustles"
-            className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary mb-4"
+            className="inline-flex items-center gap-1 text-sm font-medium text-white/70 hover:text-white mb-4 animate-fade-up"
           >
             <ArrowRight className="h-4 w-4 rotate-180" /> Back to Side Hustles
           </Link>
-
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
-            <h1 className="text-4xl md:text-5xl font-bold">{sideHustle.title}</h1>
-            <div className="flex items-center gap-1">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-5 w-5 ${i < Math.floor(sideHustle.rating) ? "text-yellow-500 fill-yellow-500" : "text-muted-foreground"}`}
-                  />
-                ))}
-              </div>
-              <span className="font-medium">{sideHustle.rating}</span>
-              <span className="text-muted-foreground">({sideHustle.reviewCount} reviews)</span>
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-up">
+              Master Freelancing: Your Path to Freedom
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 animate-fade-up animate-delay-100">
+              Turn your skills into a thriving freelance career with our expert guide, resources, and platforms.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-200">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full text-lg px-8 bg-white text-primary hover:bg-white/90"
+              >
+                <Link href="#get-started">Start Freelancing</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="rounded-full text-lg px-8 bg-transparent border-white hover:bg-white/20 text-white"
+              >
+                <Link href="/quiz">Take Our Quiz</Link>
+              </Button>
             </div>
           </div>
-
-          <p className="text-xl text-muted-foreground">{sideHustle.description}</p>
+          <div className="flex items-center justify-center gap-1 mt-6 animate-fade-up animate-delay-300">
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-5 w-5 ${i < Math.floor(sideHustle.rating) ? "text-yellow-500 fill-yellow-500" : "text-white/50"}`}
+                />
+              ))}
+            </div>
+            <span className="font-medium text-white">{sideHustle.rating}</span>
+            <span className="text-white/70">({sideHustle.reviewCount} reviews)</span>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
+        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-primary/30 blur-3xl"></div>
+        <div className="absolute bottom-20 left-10 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl"></div>
+        <div className="absolute top-10 right-10">
+          <svg
+            width="100"
+            height="100"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            className="text-white/50"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
         </div>
       </section>
 
-      {/* Overview */}
-      <section className="py-8">
+      {/* Overview Section */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-              <h2 className="text-2xl font-bold mb-4">Overview</h2>
-              <p className="text-lg mb-6">{sideHustle.longDescription}</p>
-
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="flex items-center justify-center mb-4">
+                <div className="h-[1px] w-12 bg-primary/70"></div>
+                <span className="mx-3 text-sm font-medium text-primary">OVERVIEW</span>
+                <div className="h-[1px] w-12 bg-primary/70"></div>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-up">Why Freelance?</h2>
+              <p className="text-lg mb-6 animate-fade-up animate-delay-100">{sideHustle.longDescription}</p>
+              <div className="grid grid-cols-2 gap-4 mb-6 animate-fade-up animate-delay-200">
                 <div className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-primary" />
                   <div>
@@ -192,71 +286,88 @@ export default function FreelancingPage() {
                   </div>
                 </div>
               </div>
-
-              <div className="flex gap-4 mt-6">
-                <Button asChild size="lg">
-                  <Link href="#get-started">How to Get Started</Link>
+              <div className="flex gap-4 mt-6 animate-fade-up animate-delay-300">
+                <Button asChild size="lg" className="rounded-full">
+                  <Link href="#get-started">How to Start</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="outline" size="lg" className="rounded-full">
                   <Link href="#platforms">Top Platforms</Link>
                 </Button>
               </div>
             </div>
-
-            <div>
-              <div className="grid grid-cols-1 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <CheckCircle2 className="h-5 w-5 text-green-500" /> Pros
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {sideHustle.pros.map((pro, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                          <span>{pro}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <XCircle className="h-5 w-5 text-red-500" /> Cons
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {sideHustle.cons.map((con, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <XCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
-                          <span>{con}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
+            <div className="space-y-6">
+              <Card className="card-hover bg-white/80 backdrop-blur-sm border-0 animate-fade-up animate-delay-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" /> Pros
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {sideHustle.pros.map((pro, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                        <span>{pro}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="card-hover bg-white/80 backdrop-blur-sm border-0 animate-fade-up animate-delay-300">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <XCircle className="h-5 w-5 text-red-500" /> Cons
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {sideHustle.cons.map((con, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <XCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+                        <span>{con}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
       </section>
 
-      <Separator />
-
-      {/* Popular Skills */}
-      <section className="py-12" id="skills">
+      {/* Popular Skills Section */}
+      <section className="py-16 md:py-24 bg-muted/10" id="skills">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">Popular Freelancing Skills</h2>
-          <div className="flex flex-wrap gap-3">
-            {sideHustle.popularSkills.map((skill, index) => (
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">SKILLS</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center animate-fade-up">
+            Popular Freelancing Skills
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up animate-delay-100">
+            Explore in-demand skills to kickstart your freelancing career.
+          </p>
+          <div className="flex justify-center mb-6 animate-fade-up animate-delay-200">
+            <Select value={skillFilter} onValueChange={setSkillFilter}>
+              <SelectTrigger className="rounded-full bg-white/10 border-white/20 text-foreground w-64">
+                <SelectValue placeholder="Filter by skill" />
+              </SelectTrigger>
+              <SelectContent>
+                {skills.map((skill) => (
+                  <SelectItem key={skill} value={skill}>
+                    {skill}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-wrap gap-3 justify-center animate-fade-up animate-delay-300">
+            {filteredSkills.map((skill, index) => (
               <div
                 key={index}
-                className="px-4 py-2 bg-muted/50 rounded-full text-sm font-medium"
+                className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium"
               >
                 {skill}
               </div>
@@ -265,15 +376,27 @@ export default function FreelancingPage() {
         </div>
       </section>
 
-      <Separator />
-
-      {/* How to Get Started */}
-      <section className="py-12" id="get-started">
+      {/* How to Get Started Section */}
+      <section className="py-16 md:py-24 bg-background" id="get-started">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">How to Get Started with Freelancing</h2>
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">GET STARTED</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center animate-fade-up">
+            Your Freelancing Roadmap
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+            Follow these steps to launch your freelance career with confidence.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {sideHustle.steps.map((step, index) => (
-              <Card key={index}>
+              <Card
+                key={index}
+                className="card-hover bg-white/80 backdrop-blur-sm border-0 animate-fade-up"
+                style={{ animationDelay: `${200 + index * 100}ms` }}
+              >
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm">
@@ -283,7 +406,7 @@ export default function FreelancingPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p>{step.description}</p>
+                  <p className="text-base">{step.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -291,21 +414,90 @@ export default function FreelancingPage() {
         </div>
       </section>
 
-      <Separator />
-
-      {/* Top Platforms */}
-      <section className="py-12 bg-muted/10" id="platforms">
+      {/* Earnings Calculator Section */}
+      <section className="py-16 md:py-24 bg-muted/10">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">Top Freelancing Platforms</h2>
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">CALCULATE</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center animate-fade-up">
+            Estimate Your Freelancing Earnings
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+            See how much you could earn based on your hours and hourly rate.
+          </p>
+          <Card className="card-hover bg-white/80 backdrop-blur-sm border-0 max-w-md mx-auto animate-fade-up animate-delay-200">
+            <CardHeader>
+              <CardTitle>Earnings Calculator</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1" htmlFor="hours">
+                    Hours per Week
+                  </label>
+                  <Input
+                    type="number"
+                    id="hours"
+                    value={hours}
+                    onChange={(e) => setHours(Number(e.target.value))}
+                    min={0}
+                    className="bg-white/50"
+                    aria-label="Hours per week"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1" htmlFor="rate">
+                    Hourly Rate ($)
+                  </label>
+                  <Input
+                    type="number"
+                    id="rate"
+                    value={rate}
+                    onChange={(e) => setRate(Number(e.target.value))}
+                    min={0}
+                    className="bg-white/50"
+                    aria-label="Hourly rate"
+                  />
+                </div>
+                <p className="text-lg font-semibold">
+                  Estimated Weekly Earnings: ${hours * rate}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Top Platforms Section */}
+      <section className="py-16 md:py-24 bg-background" id="platforms">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">PLATFORMS</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center animate-fade-up">
+            Top Freelancing Platforms
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+            Connect with clients and start earning through these trusted platforms.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sideHustle.platforms.map((platform, index) => (
-              <Card key={index}>
+              <Card
+                key={index}
+                className="card-hover bg-white/80 backdrop-blur-sm border-0 animate-fade-up"
+                style={{ animationDelay: `${200 + index * 100}ms` }}
+              >
                 <CardHeader>
                   <CardTitle>{platform.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-4">{platform.description}</p>
-                  <Button asChild variant="outline" className="w-full">
+                  <p className="mb-4 text-base">{platform.description}</p>
+                  <Button asChild variant="outline" className="w-full rounded-full">
                     <Link href={platform.url} target="_blank" rel="noopener noreferrer">
                       Visit Website <ArrowRight className="h-4 w-4 ml-2" />
                     </Link>
@@ -317,18 +509,36 @@ export default function FreelancingPage() {
         </div>
       </section>
 
-      {/* Resources Section */}
-      <section className="py-12">
+      {/* Success Stories Section */}
+      <section className="py-16 md:py-24 bg-muted/10">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">Helpful Resources</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sideHustle.resources.map((resource, index) => (
-              <Card key={index}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{resource.name}</CardTitle>
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">SUCCESS STORIES</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center animate-fade-up">
+            Freelancers Who Thrived
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+            Hear from freelancers who turned their skills into success with our guidance.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {filteredTestimonials.map((testimonial, index) => (
+              <Card
+                key={index}
+                className="card-hover bg-white/80 backdrop-blur-sm border-0 animate-fade-up"
+                style={{ animationDelay: `${200 + index * 100}ms` }}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Star className="h-5 w-5 text-primary" />
+                    {testimonial.name}
+                  </CardTitle>
+                  <CardDescription>{testimonial.skill}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>{resource.description}</CardDescription>
+                  <p className="text-base text-muted-foreground">“{testimonial.quote}”</p>
                 </CardContent>
               </Card>
             ))}
@@ -336,58 +546,111 @@ export default function FreelancingPage() {
         </div>
       </section>
 
-      {/* Success Factors */}
-      <section className="py-12 bg-muted/10">
+      {/* Resources Section */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-8 text-center">Keys to Success in Freelancing</h2>
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">RESOURCES</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center animate-fade-up">
+            Helpful Freelancing Resources
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+            Boost your freelance career with these curated tools and guides.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {sideHustle.resources.map((resource, index) => (
+              <Card
+                key={index}
+                className="card-hover bg-white/80 backdrop-blur-sm border-0 animate-fade-up"
+                style={{ animationDelay: `${200 + index * 100}ms` }}
+              >
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg">{resource.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base">{resource.description}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Success Factors Section */}
+      <section className="py-16 md:py-24 bg-muted/10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">SUCCESS FACTORS</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 text-center animate-fade-up">
+            Keys to Freelancing Success
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center animate-fade-up animate-delay-200">
               <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10 mb-4">
                 <GraduationCap className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-medium mb-2">Continuous Learning</h3>
-              <p>Stay current with industry trends and regularly improve your skills to remain competitive.</p>
+              <p className="text-base">Stay ahead by mastering new skills and industry trends.</p>
             </div>
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center animate-fade-up animate-delay-300">
               <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10 mb-4">
                 <Users className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-medium mb-2">Networking</h3>
-              <p>Build relationships with clients, other freelancers, and industry professionals to expand your opportunities.</p>
+              <p className="text-base">Build connections for more opportunities and support.</p>
             </div>
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center animate-fade-up animate-delay-400">
               <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10 mb-4">
                 <Landmark className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-medium mb-2">Professionalism</h3>
-              <p>Maintain high standards of communication, reliability, and quality to build a strong reputation.</p>
+              <p className="text-base">Deliver quality and reliability to earn trust and referrals.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-12">
+      {/* Newsletter & CTA Section */}
+      <section className="py-16 md:py-24 bg-primary/5 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <Lightbulb className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl font-bold mb-4">Ready to Start Your Freelancing Journey?</h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Freelancing offers a flexible way to earn income while building valuable skills. Take the first step today by identifying your marketable skills and creating your online presence.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
-                <Link href="#get-started">Get Started Guide</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/categories/freelancing">Explore Freelancing Categories</Link>
-              </Button>
-            </div>
+          <div className="flex items-center justify-center mb-12">
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <span className="mx-3 text-sm font-medium text-primary">STAY CONNECTED</span>
+            <div className="h-[1px] w-12 bg-primary/70"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-up">
+            Join the Freelancing Revolution
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up animate-delay-100">
+            Get weekly freelancing tips, platform updates, and success stories delivered to your inbox.
+          </p>
+          <NewsletterForm />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-300">
+            <Button asChild variant="default" className="flex gap-2 items-center rounded-full">
+              <Link href="mailto:contact@sidehustlingstories.com">
+                <Mail className="h-4 w-4" /> Contact Us
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="flex gap-2 items-center rounded-full">
+              <Link href="/quiz">
+                Find Your Skill <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
+        <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-primary/5 rounded-br-[100px]"></div>
+        <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-primary/3 rounded-tl-[100px]"></div>
       </section>
 
-      <Footer />
+      <ErrorBoundary fallback={<div>Error loading footer</div>}>
+        <Footer />
+      </ErrorBoundary>
     </>
   );
 }
