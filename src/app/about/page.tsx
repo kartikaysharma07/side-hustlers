@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/3rd/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/3rd/card";
+import { Input } from "@/components/3rd/input";
 import Link from "next/link";
 import { ArrowRight, Mail, Users, Lightbulb, BookOpen, DollarSign, Star } from "lucide-react";
 

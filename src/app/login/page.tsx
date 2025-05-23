@@ -1,8 +1,8 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/3rd/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/3rd/card";
 import  MainLayout  from "@/components/layout/MainLayout";
 import { FcGoogle } from "react-icons/fc";
 

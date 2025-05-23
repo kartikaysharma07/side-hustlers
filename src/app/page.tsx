@@ -1,10 +1,25 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/3rd/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/3rd/card";
+import { Input } from "@/components/3rd/input";
 import Link from "next/link";
-import { ArrowRight, Clock, DollarSign, LineChart, TrendingUp, Briefcase, Search } from "lucide-react";
+import {
+  ArrowRight,
+  Clock,
+  DollarSign,
+  LineChart,
+  TrendingUp,
+  Briefcase,
+  Search,
+} from "lucide-react";
 import { useState } from "react";
 import  MainLayout  from "@/components/layout/MainLayout";
 
@@ -33,7 +48,8 @@ const featuredSideHustles: SideHustleCard[] = [
   {
     id: "blogging",
     title: "Blogging",
-    description: "Create valuable content on topics you're passionate about and monetize your audience.",
+    description:
+      "Create valuable content on topics you're passionate about and monetize your audience.",
     icon: <LineChart className="h-10 w-10 text-primary" />,
     income: "$-$$$",
     difficulty: "Medium",
@@ -43,7 +59,8 @@ const featuredSideHustles: SideHustleCard[] = [
   {
     id: "ecommerce",
     title: "E-commerce Store",
-    description: "Sell physical or digital products through online marketplaces or your own website.",
+    description:
+      "Sell physical or digital products through online marketplaces or your own website.",
     icon: <DollarSign className="h-10 w-10 text-primary" />,
     income: "$$-$$$",
     difficulty: "Hard",
@@ -110,8 +127,22 @@ export default function Home() {
     (hustle) =>
       hustle.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       hustle.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hustle.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      hustle.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())),
   );
+
+  const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value >= 0 || e.target.value === "") {
+      setHours(value);
+    }
+  };
+
+  const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value >= 0 || e.target.value === "") {
+      setRate(value);
+    }
+  };
 
   return (
     <MainLayout>
@@ -125,15 +156,17 @@ export default function Home() {
               <span className="underline decoration-4 decoration-primary/70">Side Hustles</span>
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mb-8 animate-fade-up animate-delay-100">
-              Discover inspiring stories, practical guides, and the perfect hustle for your skills and goals.
+              Discover inspiring stories, practical guides, and the perfect hustle for your skills and
+              goals.
             </p>
             <div className="relative max-w-md mb-6 animate-fade-up animate-delay-200">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/70" />
-              <Input
+              <input
+                type="text"
                 placeholder="Search side hustles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 py-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-white focus:bg-white/20"
+                className="pl-10 py-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-white focus:bg-white/20 w-full"
               />
             </div>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-up animate-delay-300">
@@ -142,7 +175,9 @@ export default function Home() {
                 size="lg"
                 className="rounded-full text-lg px-8 bg-white text-primary hover:bg-white/90"
               >
-                <Link href="/categories">Browse Side Hustles</Link>
+                <Link href="/categories" aria-label="Browse all side hustles">
+                  Browse Side Hustles
+                </Link>
               </Button>
               <Button
                 asChild
@@ -150,7 +185,9 @@ export default function Home() {
                 size="lg"
                 className="rounded-full text-lg px-8 bg-transparent border-white hover:bg-white/20 text-white"
               >
-                <Link href="/about">Learn More</Link>
+                <Link href="/about" aria-label="Learn more about SideHustleStories">
+                  Learn More
+                </Link>
               </Button>
             </div>
           </div>
@@ -166,6 +203,7 @@ export default function Home() {
             fill="none"
             stroke="currentColor"
             className="text-white/50"
+            aria-hidden="true"
           >
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
           </svg>
@@ -232,13 +270,21 @@ export default function Home() {
                     variant="ghost"
                     className="w-full justify-between hover:bg-primary/5"
                   >
-                    <Link href={`/sidehustles/${hustle.id}`}>
+                    <Link
+                      href={`/sidehustles/${hustle.id}`}
+                      aria-label={`Learn more about ${hustle.title}`}
+                    >
                       Learn More <ArrowRight className="h-4 w-4" />
                     </Link>
                   </Button>
                   {hustle.id === "freelancing" && (
                     <Button asChild variant="link">
-                      <Link href="https://www.fiverr.com/?source=sidehustle" target="_blank">
+                      <Link
+                        href="https://www.fiverr.com/?source=sidehustle"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Join Fiverr for freelancing opportunities"
+                      >
                         Join Fiverr
                       </Link>
                     </Button>
@@ -254,7 +300,9 @@ export default function Home() {
               size="lg"
               className="rounded-full px-8"
             >
-              <Link href="/sidehustles">View All Side Hustles</Link>
+              <Link href="/sidehustles" aria-label="View all side hustles">
+                View All Side Hustles
+              </Link>
             </Button>
           </div>
         </div>
@@ -279,6 +327,7 @@ export default function Home() {
                 key={category.id}
                 href={`/categories/${category.id}`}
                 className="block group"
+                aria-label={`Explore ${category.name} category`}
               >
                 <Card className="card-hover border-0 shadow-md bg-white/80 backdrop-blur-sm h-full">
                   <CardHeader>
@@ -329,20 +378,28 @@ export default function Home() {
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium">Hours per Week:</label>
-                  <Input
+                  <label htmlFor="hours" className="block text-sm font-medium">
+                    Hours per Week:
+                  </label>
+                  <input
+                    id="hours"
                     type="number"
                     value={hours}
-                    onChange={(e) => setHours(Number(e.target.value))}
+                    onChange={handleHoursChange}
+                    min="0"
                     className="w-full p-2 border rounded bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium">Hourly Rate ($):</label>
-                  <Input
+                  <label htmlFor="rate" className="block text-sm font-medium">
+                    Hourly Rate ($):
+                  </label>
+                  <input
+                    id="rate"
                     type="number"
                     value={rate}
-                    onChange={(e) => setRate(Number(e.target.value))}
+                    onChange={handleRateChange}
+                    min="0"
                     className="w-full p-2 border rounded bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>

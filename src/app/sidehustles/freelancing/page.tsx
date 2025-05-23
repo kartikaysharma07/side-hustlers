@@ -5,11 +5,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/3rd/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/3rd/card";
+import { Input } from "@/components/3rd/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/3rd/select";
+import { Separator } from "@/components/3rd/separator";
 import {
   ArrowRight,
   Clock,

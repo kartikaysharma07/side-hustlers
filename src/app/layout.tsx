@@ -1,33 +1,31 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter } from "next/font/google";
 import ClientLayout from "./ClientLayout";
+import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "SideHustlingStories - Discover the Best Side Hustles",
-  description: "Explore a comprehensive collection of side hustle opportunities to earn extra income, build new skills, and pursue your passions.",
-  keywords: "side hustle, earn extra money, freelancing, online business, passive income",
+export const metadata = {
+  title: "SideHustleStories",
+  description: "Discover inspiring side hustle stories and practical guides",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="antialiased">
+    <html lang="en">
+      <body className={inter.className}>
         <ClientLayout>{children}</ClientLayout>
+        <Script id="clean-fdprocessedid" strategy="afterInteractive">
+          {`
+            document.querySelectorAll('[fdprocessedid]').forEach(el => {
+              el.removeAttribute('fdprocessedid');
+            });
+          `}
+        </Script>
       </body>
     </html>
   );

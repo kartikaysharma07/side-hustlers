@@ -2,10 +2,10 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/3rd/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/3rd/card";
+import { Input } from "@/components/3rd/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/3rd/select";
 import Link from "next/link";
 import { ArrowRight, Clock, DollarSign, Search, TrendingUp, Star } from "lucide-react";
 import { useState } from "react";

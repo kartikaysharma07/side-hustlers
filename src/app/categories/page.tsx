@@ -1,10 +1,10 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/3rd/card";
 import Link from "next/link";
 import { ArrowRight, ChevronRight, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/3rd/input";
+import { Button } from "@/components/3rd/button";
 
 // Categories data - this would normally come from a database or API
 const categories = [

@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/3rd/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/3rd/dropdown-menu";
 import { Menu, Search, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -52,16 +52,15 @@ export function Navbar() {
           <span className="text-blue-500">Side</span>HustleStories
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "font-medium hover:text-primary transition-colors relative py-2",
-                isScrolled ? "text-foreground" : "text-white",
-                "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                "font-medium transition-colors relative py-2",
+                isScrolled ? "text-blue-800 hover:text-blue-600" : "text-primary hover:text-blue-600",
+                "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all after:duration-300 hover:after:w-full"
               )}
             >
               {link.label}
@@ -77,7 +76,16 @@ export function Navbar() {
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
-            {status === "authenticated" ? (
+            {status === "loading" ? (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-foreground rounded-full w-10 h-10"
+                disabled
+              >
+                <User className="h-5 w-5" />
+              </Button>
+            ) : status === "authenticated" ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -91,7 +99,7 @@ export function Navbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem className="font-medium">
-                    {session?.user?.name}
+                    {session?.user?.name ?? "User"}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
                     Sign Out
@@ -109,7 +117,6 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         <div className="md:hidden flex items-center space-x-2">
           <Button
             variant="ghost"
@@ -146,7 +153,11 @@ export function Navbar() {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuItem asChild>
-                {status === "authenticated" ? (
+                {status === "loading" ? (
+                  <button className="flex w-full cursor-pointer" disabled>
+                    Loading...
+                  </button>
+                ) : status === "authenticated" ? (
                   <button
                     onClick={() => signOut({ callbackUrl: "/" })}
                     className="flex w-full cursor-pointer"

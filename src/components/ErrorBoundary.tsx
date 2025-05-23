@@ -1,7 +1,7 @@
 // src/components/ErrorBoundary.tsx
 "use client";
 
-import { Component, ReactNode } from "react";
+import { Component, type ReactNode } from "react";
 
 interface Props {
   fallback: ReactNode;
