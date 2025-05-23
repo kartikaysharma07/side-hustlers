@@ -9,10 +9,10 @@ import { motion } from "framer-motion";
 import { Command, CommandInput, CommandList, CommandItem } from "cmdk";
 import { Navbar } from "../../../components/layout/Navbar";
 import { Footer } from "../../../components/layout/Footer";
-import { Button } from "../../../components/3rd/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/3rd/card";
-import { Input } from "../../../components/3rd/input";
-import { Separator } from "../../../components/3rd/separator";
+import { Button } from "../../../components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
+import { Input } from "../../../components/ui/input";
+import { Separator } from "../../../components/ui/separator";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
 import {
   ArrowRight,
