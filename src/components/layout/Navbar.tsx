@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import {Button} from "@/components/3rd/button";
+import { cn } from "@/src/lib/utils";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/3rd/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { Menu, Search, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,7 +23,9 @@ const navLinks = [
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +34,22 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (status === "loading") {
+      console.log("Session loading...");
+    } else {
+      console.log("Session:", session);
+    }
+  }, [session, status]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery("");
+    }
+  };
 
   return (
     <nav
@@ -68,14 +87,30 @@ export function Navbar() {
           ))}
 
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-foreground rounded-full w-10 h-10"
-            >
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
+            <form onSubmit={handleSearch} className="flex items-center">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={cn(
+                  "rounded-l-full px-4 py-2 bg-white/10 border border-white/20 text-foreground focus:outline-none",
+                  isScrolled ? "text-foreground" : "text-white placeholder:text-white/50"
+                )}
+              />
+              <Button
+                type="submit"
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "rounded-r-full w-10 h-10",
+                  isScrolled ? "text-foreground" : "text-white"
+                )}
+              >
+                <Search className="h-5 w-5" />
+                <span className="sr-only">Search</span>
+              </Button>
+            </form>
             {status === "loading" ? (
               <Button
                 variant="ghost"
@@ -118,17 +153,20 @@ export function Navbar() {
         </div>
 
         <div className="md:hidden flex items-center space-x-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "rounded-full w-10 h-10",
-              isScrolled ? "text-foreground" : "text-white"
-            )}
-          >
-            <Search className="h-5 w-5" />
-            <span className="sr-only">Search</span>
-          </Button>
+          <form onSubmit={handleSearch} className="flex items-center">
+            <Button
+              type="submit"
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "rounded-full w-10 h-10",
+                isScrolled ? "text-foreground" : "text-white"
+              )}
+            >
+              <Search className="h-5 w-5" />
+              <span className="sr-only">Search</span>
+            </Button>
+          </form>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

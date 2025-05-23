@@ -1,6 +1,8 @@
+
 "use client";
 
-import { Button } from "@/components/3rd/button";
+import { useState } from "react";
+import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,7 +10,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/3rd/card";
+} from "../components/ui/card";
+import { Input } from "../components/ui/input";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -19,8 +22,7 @@ import {
   Briefcase,
   Search,
 } from "lucide-react";
-import { useState } from "react";
-import MainLayout from "@/components/layout/MainLayout";
+import MainLayout from "../components/layout/MainLayout";
 
 interface SideHustleCard {
   id: string;
@@ -121,6 +123,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [hours, setHours] = useState(10);
   const [rate, setRate] = useState(20);
+  const [error, setError] = useState<string | null>(null);
 
   const filteredHustles = featuredSideHustles.filter(
     (hustle) =>
@@ -131,41 +134,51 @@ export default function Home() {
 
   const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    setHours(value >= 0 ? value : 0);
+    if (value >= 0) {
+      setHours(value);
+      setError(null);
+    } else {
+      setError("Hours cannot be negative");
+    }
   };
 
   const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    setRate(value >= 0 ? value : 0);
+    if (value >= 0) {
+      setRate(value);
+      setError(null);
+    } else {
+      setError("Rate cannot be negative");
+    }
   };
-
 
   return (
     <MainLayout>
-      <section className="relative pt-24 pb-20 md:pt-32 md:pb-24 gradient-bg text-white overflow-hidden">
-        <div className="absolute inset-0 noise-bg"></div>
+      <section className="relative pt-24 pb-20 md:pt-32 md:pb-24 bg-gradient-to-b from-primary/80 to-primary text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10"></div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background/20 to-transparent"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-up">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-in fade-in duration-500">
               Unlock Your Earning Potential with{" "}
-              <span className="underline decoration-4 decoration-primary/70">Side Hustles</span>
+              <span className="underline decoration-4 decoration-white/70">Side Hustles</span>
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mb-8 animate-fade-up animate-delay-100">
+            <p className="text-xl text-white/90 max-w-3xl mb-8 animate-in fade-in duration-500 delay-100">
               Discover inspiring stories, practical guides, and the perfect hustle for your skills and
               goals.
             </p>
-            <div className="relative max-w-md mb-6 animate-fade-up animate-delay-200">
+            <div className="relative max-w-md mb-6 animate-in fade-in duration-500 delay-200">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/70" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search side hustles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 py-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-white focus:bg-white/20 w-full"
+                aria-label="Search side hustles"
               />
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-up animate-delay-300">
+            <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in duration-500 delay-300">
               <Button
                 asChild
                 size="lg"
@@ -189,7 +202,7 @@ export default function Home() {
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
-        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-primary/30 blur-3xl"></div>
+        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-white/30 blur-3xl"></div>
         <div className="absolute bottom-20 left-10 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl"></div>
         <div className="absolute top-10 right-10">
           <svg
@@ -209,85 +222,97 @@ export default function Home() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center mb-12">
-            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <div className="h-[1px] w-12 bg-primary"></div>
             <span className="mx-3 text-sm font-medium text-primary">FEATURED</span>
-            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <div className="h-[1px] w-12 bg-primary"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center animate-fade-up">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center animate-in fade-in duration-500">
             Trending & Beginner-Friendly Hustles
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-in fade-in duration-500 delay-100">
             Discover popular side hustles that are trending, profitable, or perfect for beginners.
           </p>
+          {error && (
+            <div className="mb-8 p-4 bg-red-50 text-red-500 rounded-md flex items-center gap-2" role="alert">
+              <AlertCircle className="h-5 w-5" />
+              <p>{error}</p>
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {filteredHustles.map((hustle) => (
-              <Card
-                key={hustle.id}
-                className="card-hover border-0 shadow-md bg-white/80 backdrop-blur-sm"
-              >
-                <CardHeader className="pb-4">
-                  <div className="mb-4 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    {hustle.icon}
-                  </div>
-                  <CardTitle className="text-xl">{hustle.title}</CardTitle>
-                  <CardDescription className="text-base line-clamp-2">
-                    {hustle.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pb-4">
-                  <div className="flex flex-col gap-2 text-sm">
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-primary" />
-                      <span>Income Potential: {hustle.income}</span>
+            {filteredHustles.length > 0 ? (
+              filteredHustles.map((hustle) => (
+                <Card
+                  key={hustle.id}
+                  className="border-0 shadow-md bg-background/80 backdrop-blur-sm hover:shadow-lg transition-shadow"
+                >
+                  <CardHeader className="pb-4">
+                    <div className="mb-4 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                      {hustle.icon}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-primary" />
-                      <span>Difficulty: {hustle.difficulty}</span>
+                    <CardTitle className="text-xl">{hustle.title}</CardTitle>
+                    <CardDescription className="text-base line-clamp-2">
+                      {hustle.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pb-4">
+                    <div className="flex flex-col gap-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <DollarSign className="h-4 w-4 text-primary" />
+                        <span>Income Potential: {hustle.income}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-primary" />
+                        <span>Difficulty: {hustle.difficulty}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-primary" />
+                        <span>Time: {hustle.timeCommitment}</span>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        {hustle.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-primary" />
-                      <span>Time: {hustle.timeCommitment}</span>
-                    </div>
-                    <div className="flex gap-2 mt-2">
-                      {hustle.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex flex-col gap-2">
-                  <Button
-                    asChild
-                    variant="ghost"
-                    className="w-full justify-between hover:bg-primary/5"
-                  >
-                    <Link
-                      href={`/sidehustles/${hustle.id}`}
-                      aria-label={`Learn more about ${hustle.title}`}
+                  </CardContent>
+                  <CardFooter className="flex flex-col gap-2">
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="w-full justify-between hover:bg-primary/5"
                     >
-                      Learn More <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  {hustle.id === "freelancing" && (
-                    <Button asChild variant="link">
                       <Link
-                        href="https://www.fiverr.com/?source=sidehustle"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Join Fiverr for freelancing opportunities"
+                        href={`/sidehustles/${hustle.id}`}
+                        aria-label={`Learn more about ${hustle.title}`}
                       >
-                        Join Fiverr
+                        Learn More <ArrowRight className="h-4 w-4" />
                       </Link>
                     </Button>
-                  )}
-                </CardFooter>
-              </Card>
-            ))}
+                    {hustle.id === "freelancing" && (
+                      <Button asChild variant="link">
+                        <Link
+                          href="https://www.fiverr.com/?source=sidehustle"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Join Fiverr for freelancing opportunities"
+                        >
+                          Join Fiverr
+                        </Link>
+                      </Button>
+                    )}
+                  </CardFooter>
+                </Card>
+              ))
+            ) : (
+              <p className="col-span-full text-center text-muted-foreground">
+                No side hustles found for "{searchQuery}".
+              </p>
+            )}
           </div>
           <div className="text-center mt-12">
             <Button
@@ -307,14 +332,14 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-muted/10">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center mb-12">
-            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <div className="h-[1px] w-12 bg-primary"></div>
             <span className="mx-3 text-sm font-medium text-primary">CATEGORIES</span>
-            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <div className="h-[1px] w-12 bg-primary"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center animate-fade-up">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center animate-in fade-in duration-500">
             Browse by Category
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-in fade-in duration-500 delay-100">
             Find the perfect side hustle based on your interests, skills, and goals.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -325,7 +350,7 @@ export default function Home() {
                 className="block group"
                 aria-label={`Explore ${category.name} category`}
               >
-                <Card className="card-hover border-0 shadow-md bg-white/80 backdrop-blur-sm h-full">
+                <Card className="border-0 shadow-md bg-background/80 backdrop-blur-sm hover:shadow-lg transition-shadow h-full">
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
                       {category.name}
@@ -359,17 +384,17 @@ export default function Home() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center mb-12">
-            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <div className="h-[1px] w-12 bg-primary"></div>
             <span className="mx-3 text-sm font-medium text-primary">CALCULATE</span>
-            <div className="h-[1px] w-12 bg-primary/70"></div>
+            <div className="h-[1px] w-12 bg-primary"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center animate-fade-up">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center animate-in fade-in duration-500">
             Estimate Your Earnings
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-up animate-delay-100">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 animate-in fade-in duration-500 delay-100">
             See how much you could earn with your side hustle based on hours and rates.
           </p>
-          <Card className="card-hover bg-white/80 backdrop-blur-sm p-6 max-w-md mx-auto">
+          <Card className="bg-background/80 backdrop-blur-sm p-6 max-w-md mx-auto shadow-md hover:shadow-lg transition-shadow">
             <CardTitle className="text-xl mb-4">Earnings Calculator</CardTitle>
             <CardContent>
               <div className="space-y-4">
@@ -377,28 +402,35 @@ export default function Home() {
                   <label htmlFor="hours" className="block text-sm font-medium">
                     Hours per Week:
                   </label>
-                  <input
+                  <Input
                     id="hours"
                     type="number"
                     value={hours}
                     onChange={handleHoursChange}
                     min="0"
-                    className="w-full p-2 border rounded bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full p-2 border rounded bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    aria-label="Hours per week"
                   />
                 </div>
                 <div>
                   <label htmlFor="rate" className="block text-sm font-medium">
                     Hourly Rate ($):
                   </label>
-                  <input
+                  <Input
                     id="rate"
                     type="number"
                     value={rate}
                     onChange={handleRateChange}
                     min="0"
-                    className="w-full p-2 border rounded bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full p-2 border rounded bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    aria-label="Hourly rate"
                   />
                 </div>
+                {error && (
+                  <p className="text-red-500 text-sm" role="alert">
+                    {error}
+                  </p>
+                )}
                 <p className="text-lg font-semibold">
                   Estimated Weekly Earnings: ${(hours * rate).toFixed(2)}
                 </p>

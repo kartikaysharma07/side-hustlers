@@ -1,0 +1,184 @@
+[
+  {
+    "id": "freelancing",
+    "title": "Freelancing",
+    "description": "Offer your skills and services directly to clients on a project basis.",
+    "longDescription": "Freelancing empowers you to turn your skills into a flexible, independent career. Work on projects you love, set your own rates, and choose clients that align with your goals. From writing and design to programming and consulting, freelancing spans countless fields, offering endless opportunities to build income and expertise.",
+    "category": "Freelancing & Services",
+    "income": "$$-$$$$ ($20-$150+/hour)",
+    "difficulty": "Medium",
+    "timeCommitment": "Flexible (5-40+ hours/week)",
+    "startupCost": "$-$$ (Basic equipment and software)",
+    "rating": 4.8,
+    "reviewCount": 156,
+    "pros": [
+      "Flexible work hours and location",
+      "Freedom to choose clients and projects",
+      "Set your own rates",
+      "Low startup costs",
+      "Ability to scale up or down as needed",
+      "Diverse income streams"
+    ],
+    "cons": [
+      "Inconsistent income, especially at the beginning",
+      "Responsible for finding clients and marketing yourself",
+      "Must handle all business aspects (taxes, invoicing, etc.)",
+      "No employee benefits (healthcare, paid time off)",
+      "Can be isolating without coworkers"
+    ],
+    "steps": [
+      {
+        "title": "Identify Your Marketable Skills",
+        "description": "Pinpoint skills in demand, like writing, design, or coding, based on your experience and passions."
+      },
+      {
+        "title": "Define Your Services and Rates",
+        "description": "Outline your offerings and set competitive rates by researching market standards."
+      },
+      {
+        "title": "Create an Online Presence",
+        "description": "Build a portfolio website and profiles on platforms like LinkedIn or Upwork to attract clients."
+      },
+      {
+        "title": "Build Your Portfolio",
+        "description": "Showcase your work with samples, even if it means starting with pro bono or discounted projects."
+      },
+      {
+        "title": "Find Your First Clients",
+        "description": "Tap your network, join freelance platforms, and pitch directly to potential clients."
+      },
+      {
+        "title": "Set Up Business Processes",
+        "description": "Use tools for contracts, invoicing, and project management to stay organized."
+      },
+      {
+        "title": "Deliver Quality Work",
+        "description": "Exceed expectations to earn repeat business and glowing referrals."
+      }
+    ],
+    "platforms": [
+      {
+        "name": "Upwork",
+        "description": "The largest freelance marketplace with opportunities in virtually every field.",
+        "url": "https://www.upwork.com/?source=sidehustle"
+      },
+      {
+        "name": "Fiverr",
+        "description": "Create specific service packages (gigs) to attract clients quickly.",
+        "url": "https://www.fiverr.com/?source=sidehustle"
+      },
+      {
+        "name": "Freelancer",
+        "description": "Global platform with millions of projects across various skills.",
+        "url": "https://www.freelancer.com/?source=sidehustle"
+      },
+      {
+        "name": "99designs",
+        "description": "Ideal for graphic designers to showcase work and enter design contests.",
+        "url": "https://99designs.com/?source=sidehustle"
+      },
+      {
+        "name": "Toptal",
+        "description": "Exclusive network for top-tier freelancers in tech and design.",
+        "url": "https://www.toptal.com/?source=sidehustle"
+      }
+    ],
+    "resources": [
+      {
+        "name": "The Freelancer's Bible",
+        "description": "Comprehensive guide to all aspects of freelancing."
+      },
+      {
+        "name": "Freelancers Union",
+        "description": "Resources, community, and advocacy for freelancers."
+      },
+      {
+        "name": "AND.CO",
+        "description": "Software for managing freelance business operations."
+      },
+      {
+        "name": "Creative Class",
+        "description": "Online course on the business of freelancing."
+      }
+    ],
+    "popularSkills": [
+      "Web Development",
+      "Graphic Design",
+      "Content Writing",
+      "Digital Marketing",
+      "Social Media Management",
+      "SEO",
+      "Video Editing",
+      "Translation",
+      "Virtual Assistance",
+      "Accounting",
+      "Consulting",
+      "UI/UX Design"
+    ],
+    "testimonials": [
+      {
+        "name": "Sarah M.",
+        "quote": "Freelancing on Upwork changed my life. I now earn $3,000/month working part-time from home!",
+        "skill": "Content Writing"
+      },
+      {
+        "name": "James T.",
+        "quote": "Fiverr helped me kickstart my graphic design career. The resources here were invaluable.",
+        "skill": "Graphic Design"
+      },
+      {
+        "name": "Priya R.",
+        "quote": "As a web developer, Toptal connected me with high-paying clients. This guide got me started!",
+        "skill": "Web Development"
+      }
+    ]
+  },
+  {
+    "id": "blogging",
+    "title": "Blogging",
+    "description": "Create valuable content on topics you're passionate about and monetize your audience.",
+    "category": "Digital & Online",
+    "income": "$-$$$ ($0-$5,000+/month)",
+    "difficulty": "Medium",
+    "timeCommitment": "10-20 hrs/week",
+    "startupCost": "$-$$ (Website hosting, domain)",
+    "rating": 4.5,
+    "reviewCount": 89
+  },
+  {
+    "id": "ecommerce",
+    "title": "E-commerce Store",
+    "description": "Sell physical or digital products through online marketplaces or your own website.",
+    "category": "Physical Products",
+    "income": "$$-$$$ ($500-$10,000+/month)",
+    "difficulty": "Hard",
+    "timeCommitment": "15-30 hrs/week",
+    "startupCost": "$$-$$$ (Inventory, website)",
+    "rating": 4.2,
+    "reviewCount": 67
+  },
+  {
+    "id": "online-courses",
+    "title": "Online Courses",
+    "description": "Share your expertise by creating and selling educational content.",
+    "category": "Education & Coaching",
+    "income": "$$-$$$ ($1,000-$20,000+/month)",
+    "difficulty": "Medium",
+    "timeCommitment": "High initially, then passive",
+    "startupCost": "$$ (Course platform, equipment)",
+    "rating": 4.7,
+    "reviewCount": 102
+  },
+  {
+    "id": "affiliate-marketing",
+    "title": "Affiliate Marketing",
+    "description": "Earn commissions by promoting products or services through referral links.",
+    "category": "Passive Income",
+    "income": "$-$$$ ($0-$10,000+/month)",
+    "difficulty": "Medium",
+    "timeCommitment": "5-15 hrs/week",
+    "startupCost": "$ (Website, marketing tools)",
+    "rating": 4.4,
+    "reviewCount": 78
+  }
+]

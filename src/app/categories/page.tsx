@@ -1,12 +1,15 @@
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/3rd/card";
-import Link from "next/link";
-import { ArrowRight, ChevronRight, Search } from "lucide-react";
-import { Input } from "@/components/3rd/input";
-import { Button } from "@/components/3rd/button";
+"use client";
 
-// Categories data - this would normally come from a database or API
+import { useState } from "react";
+import Link from "next/link";
+import { Navbar } from "../../components/layout/Navbar";
+import { Footer } from "../../components/layout/Footer";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { ArrowRight, ChevronRight, Search } from "lucide-react";
+import { motion } from "framer-motion";
+
 const categories = [
   {
     id: "digital",
@@ -67,6 +70,15 @@ const categories = [
 ];
 
 export default function CategoriesPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredCategories = categories.filter(
+    (category) =>
+      category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      category.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      category.subcategories.some((sub) => sub.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   return (
     <>
       <Navbar />
@@ -75,36 +87,37 @@ export default function CategoriesPage() {
       <section className="relative pt-24 pb-20 md:pt-32 md:pb-24 gradient-bg text-white overflow-hidden">
         <div className="absolute inset-0 noise-bg"></div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background/20 to-transparent"></div>
-
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 text-sm font-medium text-white/70 mb-4 animate-fade-up">
-              <Link href="/" className="hover:text-white">
-                Home
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              <span>Categories</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-2 text-sm font-medium text-white/70 mb-4">
+                <Link href="/" className="hover:text-white">
+                  Home
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <span>Categories</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">Side Hustle Categories</h1>
+              <p className="text-xl text-white/90 max-w-3xl">
+                Browse our comprehensive collection of side hustles organized by category.
+              </p>
+              <div className="relative max-w-md mt-8">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary" />
+                <Input
+                  placeholder="Search categories..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 py-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-white focus:bg-white/20"
+                />
+              </div>
             </div>
-
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-up">Side Hustle Categories</h1>
-            <p className="text-xl text-white/90 max-w-3xl animate-fade-up animate-delay-100">
-              Browse our comprehensive collection of side hustles organized by category. Find the perfect opportunity that matches your skills, interests, and goals.
-            </p>
-
-            {/* Search input */}
-            <div className="relative max-w-md mt-8 animate-fade-up animate-delay-200">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary" />
-              <Input
-                placeholder="Search categories..."
-                className="pl-10 py-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-white focus:bg-white/20"
-              />
-            </div>
-          </div>
+          </motion.div>
         </div>
-
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
-
-        {/* Decorative elements */}
         <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-primary/30 blur-3xl"></div>
         <div className="absolute bottom-20 left-10 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl"></div>
       </section>
@@ -117,71 +130,94 @@ export default function CategoriesPage() {
             <span className="mx-3 text-sm font-medium text-primary">EXPLORE</span>
             <div className="h-[1px] w-12 bg-primary/70"></div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((category) => (
-              <Link key={category.id} href={`/categories/${category.id}`} className="block group">
-                <Card className="card-hover border-0 shadow-sm h-full transition-all duration-300">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      {category.name}
-                      <span className="text-sm font-normal bg-primary/10 text-primary px-3 py-1 rounded-full">
-                        {category.count}
-                      </span>
-                    </CardTitle>
-                    <CardDescription className="line-clamp-2 text-base">
-                      {category.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {category.subcategories.slice(0, 3).map((subcategory) => (
-                        <span
-                          key={subcategory}
-                          className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary/80 text-secondary-foreground"
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            {filteredCategories.length ? (
+              filteredCategories.map((category) => (
+                <Link key={category.id} href={`/categories/${category.id}`} className="block group">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card className="card-hover border-0 shadow-sm h-full transition-all duration-300">
+                      <CardHeader>
+                        <CardTitle className="flex items-center justify-between">
+                          {category.name}
+                          <span className="text-sm font-normal bg-primary/10 text-primary px-3 py-1 rounded-full">
+                            {category.count}
+                          </span>
+                        </CardTitle>
+                        <CardDescription className="line-clamp-2 text-base">
+                          {category.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {category.subcategories.slice(0, 3).map((subcategory) => (
+                            <span
+                              key={subcategory}
+                              className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-secondary/80 text-secondary-foreground"
+                            >
+                              {subcategory}
+                            </span>
+                          ))}
+                          {category.subcategories.length > 3 && (
+                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                              +{category.subcategories.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      </CardContent>
+                      <CardFooter className="pt-0">
+                        <Button
+                          asChild
+                          variant="ghost"
+                          className="w-full justify-between text-primary hover:bg-primary/5 group-hover:bg-primary/5"
                         >
-                          {subcategory}
-                        </span>
-                      ))}
-                      {category.subcategories.length > 3 && (
-                        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                          +{category.subcategories.length - 3} more
-                        </span>
-                      )}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="pt-0">
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="w-full justify-between text-primary hover:bg-primary/5 group-hover:bg-primary/5"
-                    >
-                      <div>
-                        <span>Explore Category</span>
-                        <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-                      </div>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                          <div>
+                            <span>Explore Category</span>
+                            <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                          </div>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </motion.div>
+                </Link>
+              ))
+            ) : (
+              <p className="col-span-full text-center text-lg text-muted-foreground">
+                No categories found for "{searchQuery}".
+              </p>
+            )}
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-primary/5 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Not Sure Where to Start?</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Take our quick quiz to discover side hustles perfectly suited to your skills, interests, and time availability.
-          </p>
-          <Button asChild size="lg" className="rounded-full px-8">
-            <Link href="/quiz">Find Your Perfect Side Hustle</Link>
-          </Button>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Not Sure Where to Start?</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              Take our quick quiz to discover side hustles perfectly suited to your skills, interests, and time availability.
+            </p>
+            <Button asChild size="lg" className="rounded-full px-8">
+              <Link href="/quiz">Find Your Perfect Side Hustle</Link>
+            </Button>
+          </motion.div>
         </div>
-
-        {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-primary/5 rounded-br-[100px]"></div>
         <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-primary/3 rounded-tl-[100px]"></div>
       </section>
