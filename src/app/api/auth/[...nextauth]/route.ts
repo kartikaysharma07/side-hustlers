@@ -1,7 +1,8 @@
-
 import { type NextAuthOptions, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { type NextRequest, NextResponse } from "next/server";
+import { type JWT } from "next-auth/jwt";
+import { type Session as NextAuthSession, type User as NextAuthUser } from "next-auth";
 
 // Define the shape of your user and session
 interface User {
@@ -24,7 +25,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<User | null> {
-        // Replace with your authentication logic (e.g., check against DB)
+        // Replace with your authentication logic
         if (
           credentials?.email === "user@example.com" &&
           credentials?.password === "password"
@@ -36,22 +37,33 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, user }): Promise<Session> {
-      // Type session and user explicitly
-      if (user) {
+    async session({
+      session,
+      token,
+    }: {
+      session: NextAuthSession;
+      token: JWT;
+    }): Promise<NextAuthSession> {
+      if (token) {
         session.user = {
-          id: user.id,
-          email: user.email,
-          name: user.name,
+          id: token.id as string,
+          email: token.email as string,
+          name: token.name as string,
         };
       }
       return session;
     },
-    async jwt({ token, user }): Promise<any> {
-      // Use specific types for token and user
+    async jwt({
+      token,
+      user,
+    }: {
+      token: JWT;
+      user?: NextAuthUser;
+    }): Promise<JWT> {
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.name = user.name;
       }
       return token;
     },

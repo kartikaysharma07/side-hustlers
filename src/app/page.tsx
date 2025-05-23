@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/3rd/card";
-import { Input } from "@/components/3rd/input";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -21,7 +20,7 @@ import {
   Search,
 } from "lucide-react";
 import { useState } from "react";
-import  MainLayout  from "@/components/layout/MainLayout";
+import MainLayout from "@/components/layout/MainLayout";
 
 interface SideHustleCard {
   id: string;
@@ -127,22 +126,19 @@ export default function Home() {
     (hustle) =>
       hustle.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       hustle.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hustle.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())),
+      hustle.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    if (value >= 0 || e.target.value === "") {
-      setHours(value);
-    }
+    setHours(value >= 0 ? value : 0);
   };
 
   const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    if (value >= 0 || e.target.value === "") {
-      setRate(value);
-    }
+    setRate(value >= 0 ? value : 0);
   };
+
 
   return (
     <MainLayout>
